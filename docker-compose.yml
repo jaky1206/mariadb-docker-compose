@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  
+  db:
+    build:
+      context: ./docker/
+      dockerfile: Dockerfile
+    ports:
+      - "${HOST_PORT}:${DB_PORT}"
+    container_name: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASS}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASS}"
+    volumes:
+        - ./database:/var/lib/mysql
+    healthcheck:
+      test: "/usr/bin/mysql --user=${DB_USER} --password=${DB_PASS} --execute \"SHOW DATABASES;\""
+    networks:
+      mariadb-network:
+        aliases:
+          - db1.internal.example.com
+
+networks:
+  mariadb-network:
+    driver: bridge
