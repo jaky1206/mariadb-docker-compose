@@ -1,1 +1,1 @@
-# Docker compose boilterpate code for MariaDB 
+# Docker compose boilterplate code for MariaDB 
